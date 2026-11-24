@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Позиционирование и z-index — ДЗ 14</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ЗАДАНИЕ 2: Плавающая шапка position: fixed -->
+  <header class="site-header">
+    <a href="#" class="logo">PositionSite</a>
+    <nav class="main-nav">
+      <a href="#badge">Бейдж</a>
+      <a href="#content">Контент</a>
+      <button class="open-modal-btn" id="openModal">Открыть модалку</button>
+    </nav>
+  </header>
+
+  <main class="content" id="content">
+
+    <!-- ЗАДАНИЕ 1: Связка relative + absolute для бейджа -->
+    <section id="badge" class="badge-section">
+      <h2>Задание 1: Бейдж на карточке</h2>
+      <p>Родительская карточка имеет <code>position: relative</code>, а бейдж —
+         <code>position: absolute</code> в правом верхнем углу.</p>
+
+      <div class="product-card">
+        <span class="badge">NEW</span>
+        <div class="product-image">🖼️</div>
+        <h3>Товар со скидкой</h3>
+        <p>Бейдж позиционируется относительно карточки, а не страницы.</p>
+        <span class="price">1 990 €</span>
+      </div>
+    </section>
+
+    <!-- Длинный контент, чтобы проверить fixed-шапку при скролле -->
+    <section class="long-content">
+      <h2>Задание 2: Плавающая шапка</h2>
+      <p>Шапка зафиксирована вверху окна через <code>position: fixed</code>.
+         Основному контенту задан <code>padding-top</code>, чтобы он не заезжал
+         под шапку.</p>
+      <p>Прокрути страницу вниз — шапка останется на месте.</p>
+      <div class="filler"></div>
+      <div class="filler"></div>
+      <div class="filler"></div>
+      <div class="filler"></div>
+      <div class="filler"></div>
+      <div class="filler"></div>
+    </section>
+
+    <!-- ЗАДАНИЕ 3: Модальное окно с оверлеем -->
+    <section class="modal-section">
+      <h2>Задание 3: Модальное окно</h2>
+      <p>Кнопка ниже открывает модальное окно с оверлеем. Оверлей и окно
+         используют <code>position: fixed</code> и <code>z-index</code>,
+         окно центрируется через <code>top/left + transform</code>.</p>
+      <button class="open-modal-btn" id="openModal2">Открыть модальное окно</button>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>Домашнее задание 14 — Позиционирование и z-index</p>
+  </footer>
+
+  <!-- ЗАДАНИЕ 3: Модальное окно -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="Закрыть">×</button>
+      <h2 id="modalTitle">Модальное окно</h2>
+      <p>Это окно центрировано по двум осям через <code>position: fixed</code>,
+         <code>top: 50%</code>, <code>left: 50%</code> и
+         <code>transform: translate(-50%, -50%)</code>.</p>
+      <p>Оверлей имеет <code>z-index: 100</code>, окно — <code>z-index: 101</code>,
+         а шапка — <code>z-index: 50</code>, поэтому окно всегда поверх шапки.</p>
+      <button class="modal-ok" id="modalOk">Понятно</button>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('modalOverlay');
+    const openBtns = [document.getElementById('openModal'), document.getElementById('openModal2')];
+    const closeBtns = [document.getElementById('closeModal'), document.getElementById('modalOk')];
+
+    openBtns.forEach(btn => btn.addEventListener('click', () => {
+      overlay.classList.add('active');
+    }));
+    closeBtns.forEach(btn => btn.addEventListener('click', () => {
+      overlay.classList.remove('active');
+    }));
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('active');
+    });
+  </script>
+
+</body>
+</html>
